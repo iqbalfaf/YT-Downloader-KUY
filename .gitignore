@@ -1,0 +1,13 @@
+# Abaikan file executable (Windows dependencies)
+*.exe
+
+# Abaikan folder hasil download
+AUDIO/
+VIDEO/
+PLAYLIST/
+YTDownloaderKUY/
+
+# Abaikan file sistem OS
+.DS_Store
+Thumbs.db
+desktop.ini
