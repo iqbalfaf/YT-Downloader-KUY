@@ -22,16 +22,34 @@ Sebelum menggunakan script ini, pastikan sistem/perangkat Anda sudah terinstall 
 
 ---
 
-## 🚀 Cara Download & Install
+## 🚀 Cara Download Script (Langsung via Link)
 
-Pertama-tama, silakan download script ini ke perangkat Anda menggunakan perintah berikut di Terminal / Command Prompt:
+Anda bisa langsung mendownload script ini tanpa perlu `git clone`. Buka Terminal Anda dan ketikkan perintah di bawah ini sesuai perangkat Anda:
+
+### 🪟 Windows (Cara Termudah)
+Klik tombol hijau **Code > Download ZIP** di bagian atas halaman GitHub ini, lalu ekstrak folder ZIP tersebut ke komputer Anda. Atau download file `.bat` nya secara langsung.
+
+### 🐧 Linux (Terminal)
 ```bash
-git clone https://github.com/iqbalfaf/YT-Downloader-KUY.git
-cd YT-Downloader-KUY
+wget https://raw.githubusercontent.com/iqbalfaf/YT-Downloader-KUY/main/yt-manager-linux.sh
+chmod +x yt-manager-linux.sh
 ```
-*(Khusus pengguna Windows: Jika Anda tidak terbiasa dengan Git, Anda bisa klik tombol **Code > Download ZIP** di halaman atas repository ini, lalu ekstrak foldernya).*
 
-Setelah itu, pilih dan ikuti panduan di bawah ini sesuai dengan Sistem Operasi yang Anda gunakan:
+### 🍎 macOS (Terminal)
+```bash
+curl -O https://raw.githubusercontent.com/iqbalfaf/YT-Downloader-KUY/main/yt-manager-mac.sh
+chmod +x yt-manager-mac.sh
+```
+
+### 📱 Android Termux
+```bash
+curl -O https://raw.githubusercontent.com/iqbalfaf/YT-Downloader-KUY/main/yt-manager-termux.sh
+chmod +x yt-manager-termux.sh
+```
+
+---
+
+Setelah script berhasil didownload, **ikuti panduan instalasi dependensi** di bawah ini agar script bisa berjalan dengan lancar:
 
 ### 🪟 Windows
 1. Pastikan Anda telah mendownload file `.exe` mandiri untuk `yt-dlp.exe`, `ffmpeg.exe`, dan `deno.exe`.

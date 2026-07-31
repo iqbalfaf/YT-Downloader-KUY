@@ -1,5 +1,6 @@
-# Abaikan file executable (Windows dependencies)
-*.exe
+# Abaikan ffmpeg.exe karena ukurannya >100MB (Batas maksimal GitHub)
+ff*.exe
+youtube-dl.exe
 
 # Abaikan folder hasil download
 AUDIO/
