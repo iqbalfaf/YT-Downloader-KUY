@@ -22,9 +22,16 @@ Sebelum menggunakan script ini, pastikan sistem/perangkat Anda sudah terinstall 
 
 ---
 
-## 🚀 Cara Install & Penggunaan
+## 🚀 Cara Download & Install
 
-Pilih panduan di bawah ini sesuai dengan Sistem Operasi atau perangkat yang Anda gunakan:
+Pertama-tama, silakan download script ini ke perangkat Anda menggunakan perintah berikut di Terminal / Command Prompt:
+```bash
+git clone https://github.com/iqbalfaf/YT-Downloader-KUY.git
+cd YT-Downloader-KUY
+```
+*(Khusus pengguna Windows: Jika Anda tidak terbiasa dengan Git, Anda bisa klik tombol **Code > Download ZIP** di halaman atas repository ini, lalu ekstrak foldernya).*
+
+Setelah itu, pilih dan ikuti panduan di bawah ini sesuai dengan Sistem Operasi yang Anda gunakan:
 
 ### 🪟 Windows
 1. Pastikan Anda telah mendownload file `.exe` mandiri untuk `yt-dlp.exe`, `ffmpeg.exe`, dan `deno.exe`.
