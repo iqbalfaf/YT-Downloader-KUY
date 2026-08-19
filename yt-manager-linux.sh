@@ -116,9 +116,9 @@ while true; do
                 check_folder "AUDIO"
 
                 if [ "$audio_choice" == "1" ]; then
-                    yt-dlp $COOKIE_ARG --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --retries 10 --fragment-retries 10 -x --audio-format mp3 --audio-quality 0 --embed-thumbnail --embed-metadata -o "AUDIO/%(title)s.%(ext)s" "$link"
+                    yt-dlp $COOKIE_ARG --no-check-certificate --extractor-args "youtube:player_client=android,web" --retries 10 --fragment-retries 10 -x --audio-format mp3 --audio-quality 0 --embed-thumbnail --embed-metadata -o "AUDIO/%(title)s.%(ext)s" "$link"
                 elif [ "$audio_choice" == "2" ]; then
-                    yt-dlp $COOKIE_ARG --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --retries 10 --fragment-retries 10 -x --audio-format wav --embed-thumbnail --embed-metadata -o "AUDIO/%(title)s.%(ext)s" "$link"
+                    yt-dlp $COOKIE_ARG --no-check-certificate --extractor-args "youtube:player_client=android,web" --retries 10 --fragment-retries 10 -x --audio-format wav --embed-thumbnail --embed-metadata -o "AUDIO/%(title)s.%(ext)s" "$link"
                 fi
                 echo ""
                 read -p "Tekan Enter untuk melanjutkan..."
@@ -161,7 +161,7 @@ while true; do
 
                 check_folder "VIDEO"
 
-                yt-dlp $COOKIE_ARG --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --retries 10 --fragment-retries 10 -f "bv*[vcodec^=avc][ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[height<=${res}]+ba/b[height<=${res}]/best" --merge-output-format mp4 --embed-thumbnail --embed-metadata -o "VIDEO/%(title)s.%(ext)s" "$link"
+                yt-dlp $COOKIE_ARG --no-check-certificate --extractor-args "youtube:player_client=android,web" --retries 10 --fragment-retries 10 -f "bv*[vcodec^=avc][ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[height<=${res}]+ba/b[height<=${res}]/best" --merge-output-format mp4 --embed-thumbnail --embed-metadata -o "VIDEO/%(title)s.%(ext)s" "$link"
                 
                 echo ""
                 read -p "Tekan Enter untuk melanjutkan..."
@@ -193,7 +193,7 @@ while true; do
                     fi
                     
                     check_folder "PLAYLIST"
-                    yt-dlp $COOKIE_ARG --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --compat-options no-youtube-unavailable-videos --ignore-errors --retries 10 --fragment-retries 10 -x --audio-format mp3 --audio-quality 0 --embed-thumbnail --embed-metadata --yes-playlist -o "PLAYLIST/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$link"
+                    yt-dlp $COOKIE_ARG --no-check-certificate --extractor-args "youtube:player_client=android,web" --compat-options no-youtube-unavailable-videos --ignore-errors --retries 10 --fragment-retries 10 -x --audio-format mp3 --audio-quality 0 --embed-thumbnail --embed-metadata --yes-playlist -o "PLAYLIST/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$link"
                     echo ""
                     read -p "Tekan Enter untuk melanjutkan..."
                     break
@@ -234,7 +234,7 @@ while true; do
                         fi
 
                         check_folder "PLAYLIST"
-                        yt-dlp $COOKIE_ARG --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --compat-options no-youtube-unavailable-videos --ignore-errors --retries 10 --fragment-retries 10 -f "bv*[vcodec^=avc][ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[height<=${res}]+ba/b[height<=${res}]/best" --merge-output-format mp4 --embed-thumbnail --embed-metadata --yes-playlist -o "PLAYLIST/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$link"
+                        yt-dlp $COOKIE_ARG --no-check-certificate --extractor-args "youtube:player_client=android,web" --compat-options no-youtube-unavailable-videos --ignore-errors --retries 10 --fragment-retries 10 -f "bv*[vcodec^=avc][ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[height<=${res}]+ba/b[height<=${res}]/best" --merge-output-format mp4 --embed-thumbnail --embed-metadata --yes-playlist -o "PLAYLIST/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$link"
                         
                         echo ""
                         read -p "Tekan Enter untuk melanjutkan..."

@@ -101,10 +101,10 @@ if "%link%"=="" goto MenuAudio
 call :CheckFolder "AUDIO"
 
 if "%audio_choice%"=="1" (
-    yt-dlp %COOKIE_ARG% --js-runtimes "deno:.\deno.exe" --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --retries 10 --fragment-retries 10 -x --audio-format mp3 --audio-quality 0 --embed-thumbnail --embed-metadata -o "AUDIO\%%(title)s.%%(ext)s" "%link%"
+    yt-dlp %COOKIE_ARG% --js-runtimes "deno:.\deno.exe" --no-check-certificate --extractor-args "youtube:player_client=android,web" --retries 10 --fragment-retries 10 -x --audio-format mp3 --audio-quality 0 --embed-thumbnail --embed-metadata -o "AUDIO\%%(title)s.%%(ext)s" "%link%"
 )
 if "%audio_choice%"=="2" (
-    yt-dlp %COOKIE_ARG% --js-runtimes "deno:.\deno.exe" --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --retries 10 --fragment-retries 10 -x --audio-format wav --embed-thumbnail --embed-metadata -o "AUDIO\%%(title)s.%%(ext)s" "%link%"
+    yt-dlp %COOKIE_ARG% --js-runtimes "deno:.\deno.exe" --no-check-certificate --extractor-args "youtube:player_client=android,web" --retries 10 --fragment-retries 10 -x --audio-format wav --embed-thumbnail --embed-metadata -o "AUDIO\%%(title)s.%%(ext)s" "%link%"
 )
 echo.
 pause
@@ -140,7 +140,7 @@ if "%link%"=="" goto MenuVideo
 call :CheckFolder "VIDEO"
 
 :: Memprioritaskan codec AVC (H.264) yang didukung semua player dengan fallback otomatis
-yt-dlp %COOKIE_ARG% --js-runtimes "deno:.\deno.exe" --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --retries 10 --fragment-retries 10 -f "bv*[vcodec^=avc][ext=mp4][height<=%res%]+ba[ext=m4a]/bv*[ext=mp4][height<=%res%]+ba[ext=m4a]/bv*[height<=%res%]+ba/b[height<=%res%]/best" --merge-output-format mp4 --embed-thumbnail --embed-metadata -o "VIDEO\%%(title)s.%%(ext)s" "%link%"
+yt-dlp %COOKIE_ARG% --js-runtimes "deno:.\deno.exe" --no-check-certificate --extractor-args "youtube:player_client=android,web" --retries 10 --fragment-retries 10 -f "bv*[vcodec^=avc][ext=mp4][height<=%res%]+ba[ext=m4a]/bv*[ext=mp4][height<=%res%]+ba[ext=m4a]/bv*[height<=%res%]+ba/b[height<=%res%]/best" --merge-output-format mp4 --embed-thumbnail --embed-metadata -o "VIDEO\%%(title)s.%%(ext)s" "%link%"
 echo.
 pause
 goto MainMenu
@@ -173,7 +173,7 @@ if "%link%"=="" goto MenuPlaylistAudio
 
 call :CheckFolder "PLAYLIST"
 
-yt-dlp %COOKIE_ARG% --js-runtimes "deno:.\deno.exe" --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --compat-options no-youtube-unavailable-videos --ignore-errors --retries 10 --fragment-retries 10 -x --audio-format mp3 --audio-quality 0 --embed-thumbnail --embed-metadata --yes-playlist -o "PLAYLIST\%%(playlist)s\%%(playlist_index)s - %%(title)s.%%(ext)s" "%link%"
+yt-dlp %COOKIE_ARG% --js-runtimes "deno:.\deno.exe" --no-check-certificate --extractor-args "youtube:player_client=android,web" --compat-options no-youtube-unavailable-videos --ignore-errors --retries 10 --fragment-retries 10 -x --audio-format mp3 --audio-quality 0 --embed-thumbnail --embed-metadata --yes-playlist -o "PLAYLIST\%%(playlist)s\%%(playlist_index)s - %%(title)s.%%(ext)s" "%link%"
 echo.
 pause
 goto MainMenu
@@ -208,7 +208,7 @@ if "%link%"=="" goto MenuPlaylistVideo
 call :CheckFolder "PLAYLIST"
 
 :: Memprioritaskan codec AVC (H.264) untuk playlist dengan fallback otomatis
-yt-dlp %COOKIE_ARG% --js-runtimes "deno:.\deno.exe" --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --compat-options no-youtube-unavailable-videos --ignore-errors --retries 10 --fragment-retries 10 -f "bv*[vcodec^=avc][ext=mp4][height<=%res%]+ba[ext=m4a]/bv*[ext=mp4][height<=%res%]+ba[ext=m4a]/bv*[height<=%res%]+ba/b[height<=%res%]/best" --merge-output-format mp4 --embed-thumbnail --embed-metadata --yes-playlist -o "PLAYLIST\%%(playlist)s\%%(playlist_index)s - %%(title)s.%%(ext)s" "%link%"
+yt-dlp %COOKIE_ARG% --js-runtimes "deno:.\deno.exe" --no-check-certificate --extractor-args "youtube:player_client=android,web" --compat-options no-youtube-unavailable-videos --ignore-errors --retries 10 --fragment-retries 10 -f "bv*[vcodec^=avc][ext=mp4][height<=%res%]+ba[ext=m4a]/bv*[ext=mp4][height<=%res%]+ba[ext=m4a]/bv*[height<=%res%]+ba/b[height<=%res%]/best" --merge-output-format mp4 --embed-thumbnail --embed-metadata --yes-playlist -o "PLAYLIST\%%(playlist)s\%%(playlist_index)s - %%(title)s.%%(ext)s" "%link%"
 echo.
 pause
 goto MainMenu
