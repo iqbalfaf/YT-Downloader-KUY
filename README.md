@@ -7,8 +7,9 @@ Script ini menggunakan **yt-dlp** sebagai mesin utama dan didesain secara *cross
 ## 🌟 Fitur Utama
 - **Multi-Platform:** Terdapat versi yang sudah disesuaikan untuk Windows (`.bat`), Linux, macOS, dan Termux (`.sh`).
 - **Download Audio Kualitas Terbaik:** Konversi otomatis ke MP3 (Best Quality / Variable Bitrate 0) atau WAV (Lossless).
-- **Download Video Kualitas Tinggi:** Mendukung resolusi 480p, 720p, 1080p, hingga 4K. Menggunakan codec AVC / H.264 agar file MP4 kompatibel diputar di hampir semua media player atau TV.
-- **Dukungan Playlist:** Bisa mendownload seluruh isi playlist YouTube dengan sekali klik (bisa berupa Playlist Audio atau Video), dan akan diurutkan secara otomatis.
+- **Download Video Kualitas Tinggi:** Mendukung resolusi 480p, 720p, 1080p, hingga 4K. Menggunakan codec AVC / H.264 dengan fallback cerdas agar file MP4 kompatibel diputar di semua perangkat.
+- **Dukungan Playlist Penuh:** Bisa mendownload seluruh isi playlist YouTube dengan sekali klik (Playlist Audio atau Video), diurutkan secara otomatis dan anti-gagal meskipun ada video privat/terhapus.
+- **Bypass Bot Check & Sign-in Error:** Terintegrasi fitur Pengaturan Cookies (bisa langsung membaca cookies dari Google Chrome, Firefox, Edge, Brave, Safari, atau file `cookies.txt`).
 - **Auto Metadata & Thumbnail:** Gambar sampul (Cover Art) dan informasi bawaan dari video YouTube otomatis disematkan (embed) ke dalam file MP3/MP4 yang didownload.
 - **Manajemen Folder Otomatis:** Script akan secara otomatis membuat folder `AUDIO`, `VIDEO`, dan `PLAYLIST` agar file Anda tidak berantakan.
 
@@ -18,7 +19,7 @@ Script ini menggunakan **yt-dlp** sebagai mesin utama dan didesain secara *cross
 Sebelum menggunakan script ini, pastikan sistem/perangkat Anda sudah terinstall program berikut:
 1. **[yt-dlp](https://github.com/yt-dlp/yt-dlp)**: Engine utama untuk mengunduh.
 2. **[FFmpeg](https://ffmpeg.org/)**: **Sangat Wajib** ada, karena digunakan untuk mengkonversi Audio menjadi MP3 dan menggabungkan Video + Audio pada resolusi 1080p ke atas.
-3. **[Deno](https://deno.land/) atau Node.js**: *(Opsional namun sangat disarankan)* Digunakan oleh yt-dlp untuk membypass bot-protection atau pembatasan usia YouTube.
+3. **[Deno](https://deno.land/) atau Node.js**: *(Opsional namun sangat disarankan)* Digunakan oleh yt-dlp untuk membypass tantangan JavaScript/bot YouTube.
 
 ---
 
@@ -27,7 +28,7 @@ Sebelum menggunakan script ini, pastikan sistem/perangkat Anda sudah terinstall 
 Anda bisa langsung mendownload script ini tanpa perlu `git clone`. Buka Terminal Anda dan ketikkan perintah di bawah ini sesuai perangkat Anda:
 
 ### 🪟 Windows (Cara Termudah)
-Klik tombol hijau **Code > Download ZIP** di bagian atas halaman GitHub ini, lalu ekstrak folder ZIP tersebut ke komputer Anda. Atau download file `.bat` nya secara langsung.
+Klik tombol hijau **Code > Download ZIP** di bagian atas halaman GitHub ini, lalu ekstrak folder ZIP tersebut ke komputer Anda. Atau download file `YT-Manager.bat` nya secara langsung.
 
 ### 🐧 Linux (Terminal)
 ```bash
@@ -120,6 +121,8 @@ Apapun sistem operasi yang Anda gunakan, script ini akan secara otomatis merapik
 
 ---
 
-### 💡 Catatan Tambahan
-- **Error saat memasukkan link?** Pastikan link yang Anda salin utuh. Apabila Anda berubah pikiran dan ingin kembali ke Menu Utama saat dimintai link, Anda cukup **mengetik angka `0`** lalu tekan Enter.
-- **Selalu Update yt-dlp!** Karena YouTube sering mengubah sistem perlindungannya, pastikan `yt-dlp` Anda selalu berada dalam versi terbaru agar tidak gagal download. Anda dapat mengupdatenya secara langsung melalui opsi **Update YT-DLP** di dalam aplikasi (Menu No. 4).
+### 💡 Catatan Tambahan & Troubleshooting
+- **Error "Sign in to confirm you're not a bot" / HTTP 403?** 
+  Buka menu **Pengaturan Cookies** (Menu No. 4) di dalam script, lalu pilih browser Anda (misalnya Chrome/Firefox/Edge) atau letakkan file `cookies.txt` di folder script.
+- **Ingin membatalkan / kembali ke menu?** Di setiap pertanyaan/pilihan, cukup ketik angka **`0`** lalu tekan Enter.
+- **Selalu Update yt-dlp!** Karena YouTube sering mengubah sistem perlindungannya, pastikan `yt-dlp` Anda selalu berada dalam versi terbaru agar tidak gagal download. Anda dapat mengupdatenya secara langsung melalui opsi **Update YT-DLP** di dalam aplikasi (Menu No. 5).

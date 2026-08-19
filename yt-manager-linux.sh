@@ -11,6 +11,16 @@ CYAN='\033[1;36m'
 NC='\033[0m' # No Color (Kembali ke warna asli)
 
 # =========================================
+# SETUP COOKIES DEFAULT (CEK cookies.txt)
+# =========================================
+COOKIE_ARG=""
+COOKIE_NAME="Tidak Aktif"
+if [ -f "cookies.txt" ]; then
+    COOKIE_ARG="--cookies cookies.txt"
+    COOKIE_NAME="File cookies.txt (Otomatis)"
+fi
+
+# =========================================
 # PENGECEKAN DEPENDENCY (yt-dlp, ffmpeg, deno)
 # =========================================
 check_dependencies() {
@@ -66,13 +76,16 @@ while true; do
     echo -e "${GREEN}=========================================${NC}"
     echo -e "${GREEN}       YT DOWNLOAD iBay KUY (Linux)${NC}"
     echo -e "${GREEN}=========================================${NC}"
+    echo -e "Status Cookies : ${YELLOW}${COOKIE_NAME}${NC}"
+    echo -e "${GREEN}=========================================${NC}"
     echo "1. Download Audio"
     echo "2. Download Video"
     echo "3. Download Playlist"
-    echo "4. Update YT-DLP"
+    echo "4. Pengaturan Cookies (Bypass Bot / Sign In)"
+    echo "5. Update YT-DLP"
     echo "0. Keluar"
     echo -e "${GREEN}=========================================${NC}"
-    read -p "Pilih menu (1-4, 0 untuk keluar): " main_choice
+    read -p "Pilih menu (1-5, 0 untuk keluar): " main_choice
 
     case "$main_choice" in
         1) # MENU AUDIO
@@ -103,9 +116,9 @@ while true; do
                 check_folder "AUDIO"
 
                 if [ "$audio_choice" == "1" ]; then
-                    yt-dlp --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --retries 10 --fragment-retries 10 -x --audio-format mp3 --audio-quality 0 --embed-thumbnail --embed-metadata -o "AUDIO/%(title)s.%(ext)s" "$link"
+                    yt-dlp $COOKIE_ARG --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --retries 10 --fragment-retries 10 -x --audio-format mp3 --audio-quality 0 --embed-thumbnail --embed-metadata -o "AUDIO/%(title)s.%(ext)s" "$link"
                 elif [ "$audio_choice" == "2" ]; then
-                    yt-dlp --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --retries 10 --fragment-retries 10 -x --audio-format wav --embed-thumbnail --embed-metadata -o "AUDIO/%(title)s.%(ext)s" "$link"
+                    yt-dlp $COOKIE_ARG --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --retries 10 --fragment-retries 10 -x --audio-format wav --embed-thumbnail --embed-metadata -o "AUDIO/%(title)s.%(ext)s" "$link"
                 fi
                 echo ""
                 read -p "Tekan Enter untuk melanjutkan..."
@@ -148,7 +161,7 @@ while true; do
 
                 check_folder "VIDEO"
 
-                yt-dlp --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --retries 10 --fragment-retries 10 -f "bv*[vcodec^=avc][ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[height<=${res}]+ba/b[height<=${res}]/best" --merge-output-format mp4 --embed-thumbnail --embed-metadata -o "VIDEO/%(title)s.%(ext)s" "$link"
+                yt-dlp $COOKIE_ARG --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --retries 10 --fragment-retries 10 -f "bv*[vcodec^=avc][ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[height<=${res}]+ba/b[height<=${res}]/best" --merge-output-format mp4 --embed-thumbnail --embed-metadata -o "VIDEO/%(title)s.%(ext)s" "$link"
                 
                 echo ""
                 read -p "Tekan Enter untuk melanjutkan..."
@@ -180,7 +193,7 @@ while true; do
                     fi
                     
                     check_folder "PLAYLIST"
-                    yt-dlp --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --compat-options no-youtube-unavailable-videos --ignore-errors --retries 10 --fragment-retries 10 -x --audio-format mp3 --audio-quality 0 --embed-thumbnail --embed-metadata --yes-playlist -o "PLAYLIST/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$link"
+                    yt-dlp $COOKIE_ARG --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --compat-options no-youtube-unavailable-videos --ignore-errors --retries 10 --fragment-retries 10 -x --audio-format mp3 --audio-quality 0 --embed-thumbnail --embed-metadata --yes-playlist -o "PLAYLIST/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$link"
                     echo ""
                     read -p "Tekan Enter untuk melanjutkan..."
                     break
@@ -221,7 +234,7 @@ while true; do
                         fi
 
                         check_folder "PLAYLIST"
-                        yt-dlp --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --compat-options no-youtube-unavailable-videos --ignore-errors --retries 10 --fragment-retries 10 -f "bv*[vcodec^=avc][ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[height<=${res}]+ba/b[height<=${res}]/best" --merge-output-format mp4 --embed-thumbnail --embed-metadata --yes-playlist -o "PLAYLIST/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$link"
+                        yt-dlp $COOKIE_ARG --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --compat-options no-youtube-unavailable-videos --ignore-errors --retries 10 --fragment-retries 10 -f "bv*[vcodec^=avc][ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[height<=${res}]+ba/b[height<=${res}]/best" --merge-output-format mp4 --embed-thumbnail --embed-metadata --yes-playlist -o "PLAYLIST/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$link"
                         
                         echo ""
                         read -p "Tekan Enter untuk melanjutkan..."
@@ -230,7 +243,67 @@ while true; do
                 fi
             done
             ;;
-        4) # UPDATE YTDLP
+        4) # MENU COOKIES
+            while true; do
+                clear
+                echo -e "${GREEN}=========================================${NC}"
+                echo -e "${GREEN}       PENGATURAN COOKIES (BYPASS BOT)${NC}"
+                echo -e "${GREEN}=========================================${NC}"
+                echo "Jika muncul error \"Sign in to confirm you're not a bot\","
+                echo "Anda dapat menghubungkan cookies dari browser atau file cookies.txt."
+                echo ""
+                echo -e "Status Saat Ini: ${YELLOW}${COOKIE_NAME}${NC}"
+                echo -e "${GREEN}=========================================${NC}"
+                echo "1. Ambil Cookies dari Google Chrome"
+                echo "2. Ambil Cookies dari Mozilla Firefox"
+                echo "3. Ambil Cookies dari Brave Browser"
+                echo "4. Gunakan file cookies.txt (di folder script)"
+                echo "5. Nonaktifkan Cookies"
+                echo "0. Kembali ke Menu Utama"
+                echo -e "${GREEN}=========================================${NC}"
+                read -p "Pilih opsi (1-5, 0 untuk kembali): " cookie_choice
+
+                if [ "$cookie_choice" == "0" ]; then
+                    break
+                elif [ "$cookie_choice" == "1" ]; then
+                    COOKIE_ARG="--cookies-from-browser chrome"
+                    COOKIE_NAME="Google Chrome"
+                    echo -e "\n${GREEN}[+] Cookies disetel: Google Chrome${NC}"
+                    read -p "Tekan Enter untuk kembali ke Menu Utama..."
+                    break
+                elif [ "$cookie_choice" == "2" ]; then
+                    COOKIE_ARG="--cookies-from-browser firefox"
+                    COOKIE_NAME="Mozilla Firefox"
+                    echo -e "\n${GREEN}[+] Cookies disetel: Mozilla Firefox${NC}"
+                    read -p "Tekan Enter untuk kembali ke Menu Utama..."
+                    break
+                elif [ "$cookie_choice" == "3" ]; then
+                    COOKIE_ARG="--cookies-from-browser brave"
+                    COOKIE_NAME="Brave Browser"
+                    echo -e "\n${GREEN}[+] Cookies disetel: Brave Browser${NC}"
+                    read -p "Tekan Enter untuk kembali ke Menu Utama..."
+                    break
+                elif [ "$cookie_choice" == "4" ]; then
+                    if [ ! -f "cookies.txt" ]; then
+                        echo -e "\n${RED}[!] File cookies.txt tidak ditemukan di folder script!${NC}"
+                        read -p "Tekan Enter untuk melanjutkan..."
+                        continue
+                    fi
+                    COOKIE_ARG="--cookies cookies.txt"
+                    COOKIE_NAME="File cookies.txt"
+                    echo -e "\n${GREEN}[+] Cookies disetel: File cookies.txt${NC}"
+                    read -p "Tekan Enter untuk kembali ke Menu Utama..."
+                    break
+                elif [ "$cookie_choice" == "5" ]; then
+                    COOKIE_ARG=""
+                    COOKIE_NAME="Tidak Aktif"
+                    echo -e "\n${YELLOW}[*] Cookies dinonaktifkan.${NC}"
+                    read -p "Tekan Enter untuk kembali ke Menu Utama..."
+                    break
+                fi
+            done
+            ;;
+        5) # UPDATE YTDLP
             while true; do
                 clear
                 echo -e "${GREEN}=========================================${NC}"
