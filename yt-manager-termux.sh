@@ -84,9 +84,9 @@ while true; do
     echo "2. Download Video"
     echo "3. Download Playlist"
     echo "4. Update YT-DLP"
-    echo "5. Keluar"
+    echo "0. Keluar"
     echo -e "${GREEN}=========================================${NC}"
-    read -p "Pilih menu (1-5): " main_choice
+    read -p "Pilih menu (1-4, 0 untuk keluar): " main_choice
 
     case "$main_choice" in
         1) # MENU AUDIO
@@ -95,14 +95,16 @@ while true; do
                 echo -e "${GREEN}=========================================${NC}"
                 echo -e "${GREEN}             DOWNLOAD AUDIO${NC}"
                 echo -e "${GREEN}=========================================${NC}"
-                echo "1. MP3"
-                echo "2. Wav"
-                echo "3. Kembali ke Menu Utama"
+                echo "1. MP3 (Kualitas Terbaik)"
+                echo "2. WAV (Lossless)"
+                echo "0. Kembali ke Menu Utama"
                 echo -e "${GREEN}=========================================${NC}"
-                read -p "Pilih format (1-3): " audio_choice
+                read -p "Pilih format (1-2, 0 untuk kembali): " audio_choice
 
-                if [ "$audio_choice" == "3" ]; then
+                if [ "$audio_choice" == "0" ]; then
                     break
+                elif [ "$audio_choice" != "1" ] && [ "$audio_choice" != "2" ]; then
+                    continue
                 fi
 
                 read -p "Masukkan Link atau ID YouTube (Ketik 0 untuk batal): " link
@@ -115,9 +117,9 @@ while true; do
                 check_folder "AUDIO"
 
                 if [ "$audio_choice" == "1" ]; then
-                    yt-dlp --no-check-certificate -x --audio-format mp3 --audio-quality 0 --embed-thumbnail --embed-metadata -o "AUDIO/%(title)s.%(ext)s" "$link"
+                    yt-dlp --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --retries 10 --fragment-retries 10 -x --audio-format mp3 --audio-quality 0 --embed-thumbnail --embed-metadata -o "AUDIO/%(title)s.%(ext)s" "$link"
                 elif [ "$audio_choice" == "2" ]; then
-                    yt-dlp --no-check-certificate -x --audio-format wav --embed-thumbnail --embed-metadata -o "AUDIO/%(title)s.%(ext)s" "$link"
+                    yt-dlp --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --retries 10 --fragment-retries 10 -x --audio-format wav --embed-thumbnail --embed-metadata -o "AUDIO/%(title)s.%(ext)s" "$link"
                 fi
                 echo ""
                 read -p "Tekan Enter untuk melanjutkan..."
@@ -134,19 +136,12 @@ while true; do
                 echo "2. 720p"
                 echo "3. 1080p"
                 echo "4. 4K"
-                echo "5. Kembali ke Menu Utama"
+                echo "0. Kembali ke Menu Utama"
                 echo -e "${GREEN}=========================================${NC}"
-                read -p "Pilih resolusi (1-5): " video_choice
+                read -p "Pilih resolusi (1-4, 0 untuk kembali): " video_choice
 
-                if [ "$video_choice" == "5" ]; then
+                if [ "$video_choice" == "0" ]; then
                     break
-                fi
-
-                read -p "Masukkan Link atau ID YouTube (Ketik 0 untuk batal): " link
-                if [ "$link" == "0" ]; then
-                    break
-                elif [ -z "$link" ]; then
-                    continue
                 fi
 
                 res=480
@@ -155,11 +150,19 @@ while true; do
                     2) res=720 ;;
                     3) res=1080 ;;
                     4) res=2160 ;;
+                    *) continue ;;
                 esac
+
+                read -p "Masukkan Link atau ID YouTube (Ketik 0 untuk batal): " link
+                if [ "$link" == "0" ]; then
+                    break
+                elif [ -z "$link" ]; then
+                    continue
+                fi
 
                 check_folder "VIDEO"
 
-                yt-dlp --no-check-certificate -f "bv*[vcodec^=avc][ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[ext=mp4][height<=${res}]+ba[ext=m4a]/b[ext=mp4][height<=${res}]" --merge-output-format mp4 --embed-thumbnail --embed-metadata -o "VIDEO/%(title)s.%(ext)s" "$link"
+                yt-dlp --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --retries 10 --fragment-retries 10 -f "bv*[vcodec^=avc][ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[height<=${res}]+ba/b[height<=${res}]/best" --merge-output-format mp4 --embed-thumbnail --embed-metadata -o "VIDEO/%(title)s.%(ext)s" "$link"
                 
                 echo ""
                 read -p "Tekan Enter untuk melanjutkan..."
@@ -174,11 +177,11 @@ while true; do
                 echo -e "${GREEN}=========================================${NC}"
                 echo "1. Playlist Audio (MP3)"
                 echo "2. Playlist Video (MP4)"
-                echo "3. Kembali ke Menu Utama"
+                echo "0. Kembali ke Menu Utama"
                 echo -e "${GREEN}=========================================${NC}"
-                read -p "Pilih tipe (1-3): " play_choice
+                read -p "Pilih tipe (1-2, 0 untuk kembali): " play_choice
 
-                if [ "$play_choice" == "3" ]; then
+                if [ "$play_choice" == "0" ]; then
                     break
                 fi
 
@@ -191,7 +194,7 @@ while true; do
                     fi
                     
                     check_folder "PLAYLIST"
-                    yt-dlp --no-check-certificate -x --audio-format mp3 --audio-quality 0 --embed-thumbnail --embed-metadata --yes-playlist -o "PLAYLIST/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$link"
+                    yt-dlp --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --compat-options no-youtube-unavailable-videos --ignore-errors --retries 10 --fragment-retries 10 -x --audio-format mp3 --audio-quality 0 --embed-thumbnail --embed-metadata --yes-playlist -o "PLAYLIST/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$link"
                     echo ""
                     read -p "Tekan Enter untuk melanjutkan..."
                     break
@@ -207,19 +210,12 @@ while true; do
                         echo "2. 720p"
                         echo "3. 1080p"
                         echo "4. 4K"
-                        echo "5. Batal"
+                        echo "0. Kembali ke Menu Playlist"
                         echo -e "${GREEN}=========================================${NC}"
-                        read -p "Pilih resolusi (1-5): " play_vid_choice
+                        read -p "Pilih resolusi (1-4, 0 untuk kembali): " play_vid_choice
 
-                        if [ "$play_vid_choice" == "5" ]; then
+                        if [ "$play_vid_choice" == "0" ]; then
                             break
-                        fi
-
-                        read -p "Masukkan Link Playlist YouTube (Ketik 0 untuk batal): " link
-                        if [ "$link" == "0" ]; then
-                            break
-                        elif [ -z "$link" ]; then
-                            continue
                         fi
 
                         res=480
@@ -228,10 +224,18 @@ while true; do
                             2) res=720 ;;
                             3) res=1080 ;;
                             4) res=2160 ;;
+                            *) continue ;;
                         esac
 
+                        read -p "Masukkan Link Playlist YouTube (Ketik 0 untuk batal): " link
+                        if [ "$link" == "0" ]; then
+                            break
+                        elif [ -z "$link" ]; then
+                            continue
+                        fi
+
                         check_folder "PLAYLIST"
-                        yt-dlp --no-check-certificate --ignore-errors -f "bv*[vcodec^=avc][ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[ext=mp4][height<=${res}]+ba[ext=m4a]/b[ext=mp4][height<=${res}]" --merge-output-format mp4 --embed-thumbnail --embed-metadata --yes-playlist -o "PLAYLIST/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$link"
+                        yt-dlp --no-check-certificate --extractor-args "youtube:player_client=default,web,android" --compat-options no-youtube-unavailable-videos --ignore-errors --retries 10 --fragment-retries 10 -f "bv*[vcodec^=avc][ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[ext=mp4][height<=${res}]+ba[ext=m4a]/bv*[height<=${res}]+ba/b[height<=${res}]/best" --merge-output-format mp4 --embed-thumbnail --embed-metadata --yes-playlist -o "PLAYLIST/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" "$link"
                         
                         echo ""
                         read -p "Tekan Enter untuk melanjutkan..."
@@ -241,18 +245,45 @@ while true; do
             done
             ;;
         4) # UPDATE YTDLP
-            clear
-            echo -e "${GREEN}=========================================${NC}"
-            echo -e "${GREEN}             MEMPERBARUI YT-DLP${NC}"
-            echo -e "${GREEN}=========================================${NC}"
-            
-            echo "Mencoba mengupdate melalui yt-dlp -U..."
-            yt-dlp -U || echo -e "\nJika gagal (Permission Denied/Error), jalankan manual via terminal:\npkg install yt-dlp"
-            
-            echo ""
-            read -p "Tekan Enter untuk kembali ke Menu Utama..."
+            while true; do
+                clear
+                echo -e "${GREEN}=========================================${NC}"
+                echo -e "${GREEN}             MEMPERBARUI YT-DLP${NC}"
+                echo -e "${GREEN}=========================================${NC}"
+                echo "1. Update ke Versi Stabil (Rilis Resmi)"
+                echo "2. Update ke Versi Nightly (Fix Bug YouTube Terbaru)"
+                echo "3. Bersihkan Cache yt-dlp"
+                echo "0. Kembali ke Menu Utama"
+                echo -e "${GREEN}=========================================${NC}"
+                read -p "Pilih opsi (1-3, 0 untuk kembali): " update_choice
+
+                if [ "$update_choice" == "0" ]; then
+                    break
+                elif [ "$update_choice" == "1" ]; then
+                    echo ""
+                    echo "[*] Mengupdate yt-dlp ke versi stabil..."
+                    yt-dlp -U || echo -e "\nJika gagal, jalankan: pkg upgrade yt-dlp atau pip install --upgrade yt-dlp"
+                    echo ""
+                    read -p "Tekan Enter untuk kembali..."
+                    break
+                elif [ "$update_choice" == "2" ]; then
+                    echo ""
+                    echo "[*] Mengupdate yt-dlp ke versi nightly terbaru..."
+                    yt-dlp --update-to nightly || echo -e "\nJika gagal, coba: pip install --upgrade --pre yt-dlp"
+                    echo ""
+                    read -p "Tekan Enter untuk kembali..."
+                    break
+                elif [ "$update_choice" == "3" ]; then
+                    echo ""
+                    echo "[*] Membersihkan cache yt-dlp..."
+                    yt-dlp --rm-cache-dir
+                    echo ""
+                    read -p "Tekan Enter untuk kembali..."
+                    break
+                fi
+            done
             ;;
-        5) # EXIT
+        0) # EXIT
             clear
             exit 0
             ;;

@@ -1,0 +1,14 @@
+# Abaikan ffmpeg.exe karena ukurannya >100MB (Batas maksimal GitHub)
+ff*.exe
+youtube-dl.exe
+
+# Abaikan folder hasil download
+AUDIO/
+VIDEO/
+PLAYLIST/
+YTDownloaderKUY/
+
+# Abaikan file sistem OS
+.DS_Store
+Thumbs.db
+desktop.ini
